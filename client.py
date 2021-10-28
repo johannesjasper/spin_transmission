@@ -1,6 +1,6 @@
 from Crypto.PublicKey import RSA
-from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
+from Crypto.Hash import SHA256
 from base64 import b64encode
 from jwcrypto.jwk import JWK
 import requests
@@ -17,7 +17,7 @@ public_pem = JWK.from_json(r.text).export_to_pem()
 public_key = RSA.import_key(public_pem)
 
 print("Encrypting plain text...")
-cipher_rsa = PKCS1_OAEP.new(public_key)
+cipher_rsa = PKCS1_OAEP.new(public_key, hashAlgo=SHA256)
 cipher_text = b64encode(cipher_rsa.encrypt(plain_text.encode())).decode()
 print(f"cipher text: {cipher_text}\n")
 
