@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check-In Sharing Crypto Benchmark</title>
+    <script type="text/javascript">
+        let enc = new TextEncoder();
+
+        async function getPublicKey() {
+            return fetch("http://localhost:8080/jwk")
+                .then(response => response.json())
+                .then(jwk => crypto.subtle.importKey(
+                    "jwk",
+                    jwk,
+                    {
+                        name: "RSA-OAEP",
+                        hash: {name: "SHA-256"},
+                    },
+                    false,
+                    ["encrypt"]
+                ))
+        }
+
+        async function encrypt(plaintext, publicKey) {
+            cipher_ab = await crypto.subtle.encrypt(
+                {
+                    name: "RSA-OAEP",
+                },
+                publicKey,
+                enc.encode(plaintext)
+            )
+            return arrayBufferToBase64(cipher_ab)
+        }
+
+        function arrayBufferToBase64(buffer) {
+            return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        }
+
+        function clear_result(data) {
+            document.getElementById("output").innerHTML = '';
+        }
+
+        function show_result(data) {
+            let element = document.getElementById("output");
+            let tag = document.createElement("p");
+            let text = document.createTextNode(data);
+            tag.appendChild(text);
+            element.appendChild(tag);
+        }
+
+        async function run() {
+            clear_result()
+            const messageBox = document.querySelector("#rsa-oaep-message");
+            let message = messageBox.value;
+
+            show_result("Fetching public key...")
+            let pubkey = await getPublicKey();
+
+            show_result("Encryping...")
+            let cipher_text = await encrypt(message, pubkey)
+            show_result("Cipher text: " + cipher_text)
+
+            show_result("Sending to server for Decryption...")
+            let decrypted = await fetch("http://localhost:8080/decrypt", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({"ciphertext": cipher_text}),
+                // mode: 'no-cors',
+            }).then(response => response.text());
+
+            show_result("decrypted: " + decrypted)
+        }
+
+
+    </script>
+</head>
+<body>
+<h1>SPIN Transmission Demo</h1>
+<label for="rsa-oaep-message">Enter a message to encrypt:</label>
+<input type="text" id="rsa-oaep-message" name="message" size="25" value="The owl hoots at midnight">
+<div id="output">
+</div>
+<button type="button" onclick="run()">encrypt/decrypt</button>
+
+</body>
+</html>

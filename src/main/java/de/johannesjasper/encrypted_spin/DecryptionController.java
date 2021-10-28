@@ -37,7 +37,6 @@ public class DecryptionController {
 
     @PostMapping("/decrypt")
     public String decrypt(@RequestBody DecryptionRequest request) throws Exception {
-        System.out.println(request);
         return decrypt(request.ciphertext, config.getPrivateKey());
     }
 
