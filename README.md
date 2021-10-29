@@ -4,19 +4,15 @@ This repo contains a server that
 * serves an RSA public key as JWK at `GET /jwk`
 * offers an endpoint at `POST /decrypt` which will decrypt incoming ciphertext and return it
 
-Start the server by running `./gradlew bootRun`.
+The repo also contains two client implementations that ought to demonstrate the integration.
+* a browser/JS implementation that you can use by navigating to [http://localhost:8080/index.html](http://localhost:8080/index.html)
+* a python client in `client.py` (install requirements.txt in a venv)
 
-## Clients
 
-This repo also contains client implementations that ought to demonstrate the integration.
-
-### JS (Browser)
-Navigate to [http://localhost:8080/index.html](http://localhost:8080/index.html), insert a message, and hit the button.
-
-### Python
-Start `client.py` and insert a message to encrypt/decrypt.
+Start the containerized server by running
+```bash
+docker run -p 8080:8080 jjasper/spin-transport
 ```
-# activate venv
-pip install -r requirements.txt
-python client.py
-```
+
+Or start it locally by running `./gradlew bootRun` (required Java17).
+
