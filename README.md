@@ -1,4 +1,4 @@
-# SPIN Transmission Demo
+# RSA OAEP Demo
 
 This repo contains a server that
 * serves an RSA public key as JWK at `GET /jwk`
@@ -8,6 +8,10 @@ The repo also contains two client implementations that ought to demonstrate the 
 * a browser/JS implementation that you can use by navigating to [http://localhost:8080/index.html](http://localhost:8080/index.html)
 * a python client in `client.py` (install requirements.txt in a venv)
 
+It uses :
+* RSA_OAEP
+* SHA512
+* a (hardcoded) RSA key with a length of 4096 bit
 
 Start the containerized server by running
 ```bash
