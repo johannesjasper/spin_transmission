@@ -27,7 +27,7 @@ public class DecryptionController {
     public Map<String, Object> getJwk() {
         return new RSAKey.Builder(config.getPublicKey())
                 .keyUse(KeyUse.ENCRYPTION)
-                .algorithm(JWEAlgorithm.RSA_OAEP_256)
+                .algorithm(JWEAlgorithm.RSA_OAEP_512)
                 .keyID("3fb99cbb-4773-4376-8d89-b216d83a6cab") // random
                 .build()
                 .toPublicJWK()
@@ -41,7 +41,7 @@ public class DecryptionController {
     }
 
     private String decrypt(String cipherText, Key privKey) throws Exception {
-        var cipher = Cipher.getInstance("RSA/None/OAEPWithSHA256AndMGF1Padding", "BC");
+        var cipher = Cipher.getInstance("RSA/None/OAEPWithSHA512AndMGF1Padding", "BC");
         cipher.init(Cipher.DECRYPT_MODE, privKey);
         return new String(cipher.doFinal(Base64.getDecoder().decode(cipherText)));
     }
