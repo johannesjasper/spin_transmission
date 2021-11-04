@@ -68,3 +68,7 @@ spin:
     6jVupzzJa2JuXs5PpXHRt3Kc8VBk5Ot2wlfT96O7yyiuTquIL1NOBIxNoA==
     -----END RSA PRIVATE KEY-----
 
+
+server:
+  error:
+    include-stacktrace: never

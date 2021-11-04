@@ -24,7 +24,6 @@ dependencies {
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.69'
     implementation 'com.nimbusds:nimbus-jose-jwt:9.15.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
