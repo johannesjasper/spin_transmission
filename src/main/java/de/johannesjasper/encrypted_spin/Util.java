@@ -1,25 +1,19 @@
 package de.johannesjasper.encrypted_spin;
 
-import lombok.SneakyThrows;
+import com.nimbusds.jose.util.X509CertUtils;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 
 import java.io.StringReader;
 import java.security.KeyFactory;
+import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 public class Util {
 
-    public static RSAPublicKey readPublicKey(String publicPEM) throws Exception {
-        KeyFactory factory = KeyFactory.getInstance("RSA");
-        PemReader pemReader = new PemReader(new StringReader(publicPEM));
-        PemObject pemObject = pemReader.readPemObject();
-        byte[] content = pemObject.getContent();
-        X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(content);
-        return (RSAPublicKey) factory.generatePublic(pubKeySpec);
+    public static X509Certificate readCertificate(String encodedCert) {
+        return X509CertUtils.parse(encodedCert);
     }
 
     public static RSAPrivateKey readPrivateKey(String privatePEM) throws Exception {
