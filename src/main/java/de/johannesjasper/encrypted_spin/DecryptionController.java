@@ -69,7 +69,7 @@ public class DecryptionController {
     }
 
 
-    @GetMapping("/api/publickey/spin")
+    @GetMapping(value = "/api/publickey/spin", produces = "application/jwk+json")
     public Map<String, Object> getJwk() {
         return jwk.toJSONObject();
     }
