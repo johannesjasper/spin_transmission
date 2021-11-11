@@ -49,7 +49,7 @@ public class DecryptionController {
     }
 
 
-    @GetMapping("/jwk")
+    @GetMapping("/api/publickey/spin")
     public Map<String, Object> getJwk() {
         return new RSAKey.Builder(config.getPublicKey())
                 .keyUse(KeyUse.ENCRYPTION)

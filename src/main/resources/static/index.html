@@ -7,7 +7,7 @@
         let enc = new TextEncoder();
 
         async function getPublicKey() {
-            return fetch("http://localhost:8080/jwk")
+            return fetch("http://localhost:8080/api/publickey/spin")
                 .then(response => response.json())
                 .then(jwk => crypto.subtle.importKey(
                     "jwk",

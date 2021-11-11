@@ -10,7 +10,7 @@ plain_text = input("Enter SPIN: ")
 print(f"plaintext: {plain_text}\n")
 
 print("Getting JWK...\n")
-r = requests.get('http://localhost:8080/jwk')
+r = requests.get('http://localhost:8080/api/publickey/spin')
 if not r:
     print("Failed to get JWK...", r.status_code, r.text)
 public_pem = JWK.from_json(r.text).export_to_pem()

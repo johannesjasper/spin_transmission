@@ -1,7 +1,7 @@
 # RSA OAEP Demo
 
 This repo contains a server that
-* serves an RSA public key as JWK at `GET /jwk`
+* serves an RSA public key and x509 certificate as JWK at `GET /api/publickey/spin`
 * offers an endpoint at `POST /decrypt` which decrypts incoming cipher text and returns the plain text
 
 The repo also contains two client implementations that ought to demonstrate the integration:
