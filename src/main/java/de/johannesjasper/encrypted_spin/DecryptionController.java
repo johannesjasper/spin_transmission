@@ -16,7 +16,6 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -58,12 +57,15 @@ public class DecryptionController {
 
     @SneakyThrows
     private RSAKey buildJWK() {
-        var x5c = com.nimbusds.jose.util.Base64.encode(config.getCertificate().getEncoded());
+        var x5c = config.getCertificateChain().stream()
+                .map(Util::encodeCertificate)
+                .map(com.nimbusds.jose.util.Base64::encode)
+                .toList();
         return new RSAKey.Builder(config.getPublicKey())
                 .keyUse(KeyUse.ENCRYPTION)
                 .algorithm(JWEAlgorithm.RSA_OAEP_512)
                 .keyID("3fb99cbb-4773-4376-8d89-b216d83a6cab")
-                .x509CertChain(List.of(x5c))
+                .x509CertChain(x5c)
                 .build()
                 .toPublicJWK();
     }

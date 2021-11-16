@@ -22,8 +22,6 @@ Or start it locally by running `./gradlew bootRun` (requires Java17).
 
 ### Configuration
 
-The certificate and provate key can be replaced in the `application.yml`.
-The certificate used here was created with the following command
-```
-openssl req -newkey rsa:4096 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
-```
+The certificate chain and the keypair are loaded from a Keystore file in the resources folder. 
+The name, password, and alias can be set in the `application.yml`.
+Please refer to `generate_certs.sh`, which will create a CA, an intermediate, and a server certificate and bundle them in a `spin.pfx`.
